@@ -7,10 +7,17 @@ class PostsController < ApplicationController
   def edit
   end
 
+  # re-render form if the updated post is invalid.
   def update
+    # @post = Post.find(params[:id])
     @post.update(post_params)
 
-    redirect_to post_path(@post)
+    if @post.valid?
+      @post.save
+      redirect_to post_path(@post)
+    else
+      render :edit
+    end
   end
 
   private
